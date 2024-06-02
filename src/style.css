@@ -1,0 +1,173 @@
+.bg-image {
+  background-image: url("img/bg.jpg"); /* Replace with your image path */
+  background-size: cover; /* Adjust as needed (cover, contain, etc.) */
+  background-position: center; /* Adjust as needed (center, top left, etc.) */
+}
+
+.tim {
+  height: 60vh;
+  padding-top: 50px;
+}
+
+.ling {
+  display: inline-block;
+  border-radius: 50%;
+  width: 150px;
+  margin: auto;
+  height: 150px;
+  color: #fff;
+  background-color: black;
+}
+
+.ling i {
+  position: relative;
+  top: 30px;
+}
+
+.crop-img {
+  object-fit: cover;
+}
+
+.tim img {
+  width: 250px;
+  border: 10px solid #cccccc;
+}
+
+a.social {
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+  color: #fff;
+  border-radius: 50%;
+  background-color: #333;
+  line-height: 40px;
+}
+
+.client img {
+  height: auto;
+  max-height: 50px;
+}
+
+body {
+  font-family: sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f4f4f4;
+}
+
+.container {
+  width: 400px;
+  margin: 50px auto;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.login-form {
+  text-align: center;
+}
+
+h2 {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.input-group {
+  margin-bottom: 15px;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+input[type="text"],
+input[type="password"] {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+button[type="submit"] {
+  background-color: #007bff;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+.mt-2 {
+  margin-top: 20px;
+}
+
+#comment-form {
+  display: flex;
+  flex-direction: column;
+  width: 500px;
+  margin: 0 auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.rating label {
+  margin-right: 10px;
+  font-size: 24px; /* Ukuran font lebih besar untuk bintang */
+}
+
+.rating input[type="radio"] + label::before {
+  content: "\f005"; /* Ikon bintang Font Awesome */
+  color: #ff9900; /* Contoh: Warna emas untuk bintang */
+}
+
+.comment-section {
+  display: flex;
+  flex-direction: column;
+}
+
+.comment-section label {
+  margin-bottom: 5px;
+}
+
+textarea {
+  height: 100px;
+  resize: vertical;
+}
+
+button {
+  background-color: #007bff;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.rating {
+  display: flex;
+  cursor: pointer; /* Set cursor to pointer on hover */
+}
+
+.rating i {
+  font-size: 24px; /* Adjust font size as needed */
+  margin: 0 5px;
+  color: #ccc; /* Initial color for unselected stars */
+}
+
+.rating i.selected {
+  color: #ff9900; /* Example: Color for selected stars */
+}
+
+#popup .relative.p-4.mx-auto.max-w-sm.rounded-md.bg-white.shadow-lg {
+  text-align: center;
+}
