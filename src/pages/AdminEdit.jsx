@@ -25,7 +25,7 @@ function AdminEdit() {
 
   const fetchWebinar = async () => {
     try {
-      const response = await axios.get(`http://119.81.65.98:3000/webinar/${id}`, {
+      const response = await axios.get(`http://119.81.65.99:3000/webinar/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -77,7 +77,7 @@ function AdminEdit() {
     }
 
     try {
-      const response = await axios.patch(`http://119.81.65.98:3000/webinar/edit/${id}`, updatedData, {
+      const response = await axios.patch(`119.81.65.99:3000/webinar/edit/${id}`, updatedData, {
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "multipart/form-data",

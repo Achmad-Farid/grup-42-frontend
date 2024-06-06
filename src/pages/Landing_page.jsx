@@ -17,7 +17,7 @@ function Landing_page() {
     // Fungsi untuk mengambil data dari API
     const fetchData = async () => {
       try {
-        const response = await axios.get("http://119.81.65.98:3000/webinar");
+        const response = await axios.get("http://119.81.65.99:3000/webinar");
         setWebinarData(response.data[0]);
       } catch (error) {
         console.error("Error fetching webinar data:", error);

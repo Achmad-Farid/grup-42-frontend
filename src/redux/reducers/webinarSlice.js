@@ -14,7 +14,7 @@ export const addWebinar = createAsyncThunk("webinars/addWebinar", async (formDat
       throw new Error("Token not found in local storage");
     }
 
-    const response = await axios.post("http://119.81.65.98:3000/webinar/add", formData, {
+    const response = await axios.post("http://119.81.65.99:3000/webinar/add", formData, {
       headers: {
         "Content-Type": "multipart/form-data",
         Authorization: `Bearer ${token}`,

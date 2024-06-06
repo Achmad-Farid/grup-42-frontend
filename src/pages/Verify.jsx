@@ -10,7 +10,7 @@ function Verify() {
   useEffect(() => {
     const verifyToken = async () => {
       try {
-        const response = await axios.get(`http://119.81.65.98:3000/verify/${token}`);
+        const response = await axios.get(`19.81.65.99:3000/verify/${token}`);
         setVerificationMessage(response.data.message);
         // Redirect to login page if verification is successful
         if (response.status === 200) {

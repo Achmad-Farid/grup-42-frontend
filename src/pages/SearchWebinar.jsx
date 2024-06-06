@@ -22,7 +22,7 @@ const SearchWebinar = () => {
     e.preventDefault();
     setLoading(true);
     try {
-      const response = await axios.get("http://119.81.65.98:3000/search", { params: searchCriteria });
+      const response = await axios.get("http://119.81.65.99:3000/search", { params: searchCriteria });
       setSearchResults(Array.isArray(response.data) ? response.data : []);
     } catch (error) {
       console.error("Error searching for webinars:", error);

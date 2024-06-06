@@ -18,7 +18,7 @@ export function addComment(id, comment, token) {
     dispatch(fetching());
     try {
       await axios.post(
-        `http://119.81.65.98:3000/${id}/comments`,
+        `http://119.81.65.99:3000/${id}/comments`,
         { comment },
         {
           headers: {
@@ -38,7 +38,7 @@ export function getWebinarById(id) {
   return async function (dispatch) {
     dispatch(fetching());
     try {
-      const { data } = await axios(`http://119.81.65.98:3000/webinar/${id}`);
+      const { data } = await axios(`19.81.65.99:3000/webinar/${id}`);
       dispatch(success(data));
     } catch (error) {
       console.error("Failed to fetch webinar by ID:", error);
@@ -51,7 +51,7 @@ export function addRating(id, rating, token) {
     dispatch(fetching());
     try {
       await axios.post(
-        `http://119.81.65.98:3000/${id}/ratings`,
+        `http://119.81.65.99:3000/${id}/ratings`,
         { rating },
         {
           headers: {

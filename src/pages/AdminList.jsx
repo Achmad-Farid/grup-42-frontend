@@ -14,7 +14,7 @@ function AdminList() {
 
   const fetchWebinars = async () => {
     try {
-      const response = await axios.get("http://119.81.65.98:3000/webinar", {
+      const response = await axios.get("http://119.81.65.99:3000/webinar", {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -27,7 +27,7 @@ function AdminList() {
 
   const deleteWebinar = async (id) => {
     try {
-      const response = await axios.delete(`http://119.81.65.98:3000/webinar/delete/${id}`, {
+      const response = await axios.delete(`http://119.81.65.99:3000/webinar/delete/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
