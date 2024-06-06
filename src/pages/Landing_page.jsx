@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import imgAris from "../img/arys.jpg";
@@ -6,8 +6,27 @@ import imgFarid from "../img/farid.jpg";
 import imgMarwa from "../img/marwa.jpg";
 import imgOkta from "../img/okta.jpg";
 import imgIrzia from "../img/irzia.jpg";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 function Landing_page() {
+  const navigate = useNavigate();
+  const [webinarData, setWebinarData] = useState(null);
+
+  useEffect(() => {
+    // Fungsi untuk mengambil data dari API
+    const fetchData = async () => {
+      try {
+        const response = await axios.get("http://119.81.65.98:3000/webinar");
+        setWebinarData(response.data[0]);
+      } catch (error) {
+        console.error("Error fetching webinar data:", error);
+      }
+    };
+
+    // Panggil fungsi fetchData saat komponen pertama kali dimuat
+    fetchData();
+  }, []);
   return (
     <>
       <Navbar></Navbar>
@@ -24,7 +43,7 @@ function Landing_page() {
               </h1>
               <p className="mt-4 max-w-lg sm:text-xl/relaxed">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nesciunt illo tenetur fuga ducimus numquam ea!</p>
               <div className="mt-8 flex flex-wrap gap-4 text-center">
-                <a href="webinar.html" className="block w-full rounded bg-purple-600 px-12 py-3 text-sm font-medium text-white shadow hover:bg-purple-700 focus:outline-none focus:ring active:bg-purle-500 sm:w-auto">
+                <a onClick={() => navigate("/search")} className="block w-full rounded bg-purple-600 px-12 py-3 text-sm font-medium text-white shadow hover:bg-purple-700 focus:outline-none focus:ring active:bg-purle-500 sm:w-auto">
                   Cari Webinar
                 </a>
               </div>
@@ -37,28 +56,34 @@ function Landing_page() {
           <div className="mx-auto max-w-screen-2xl px-4 py-16 sm:px-6 lg:px-8">
             <div className="grid grid-cols-1 lg:h-screen lg:grid-cols-2">
               <div className="relative z-10 lg:py-16">
-                <div className="relative h-64 sm:h-80 lg:h-full">
-                  <img alt="" src="./src/img/hl.jpg" className="absolute inset-0 h-full w-full object-cover" />
-                </div>
+                <div className="relative h-64 sm:h-80 lg:h-full">{webinarData && webinarData.image && <img alt="" src={webinarData.image} className="absolute inset-0 h-full w-full object-cover" />}</div>
               </div>
               <div className="relative flex items-center bg-gray-100">
                 <span className="hidden lg:absolute lg:inset-y-0 lg:-start-16 lg:block lg:w-16 lg:bg-gray-100" />
                 <div className="p-8 sm:p-16 lg:p-24">
-                  <h2 className="text-2xl font-bold sm:text-3xl">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Tempore, debitis.</h2>
-                  <p className="mt-4 text-gray-600">
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid, molestiae! Quidem est esse numquam odio deleniti, beatae, magni dolores provident quaerat totam eos, aperiam architecto eius quis quibusdam fugiat dicta.
-                  </p>
-                  <a
-                    href="https://wa.me/6285862914310/"
-                    className="mt-8 inline-block rounded border border-indigo-600 bg-indigo-600 px-12 py-3 text-sm font-medium text-white hover:bg-transparent hover:text-indigo-600 focus:outline-none focus:ring active:text-indigo-500"
-                  >
-                    Daftar
-                  </a>
+                  {webinarData ? (
+                    <>
+                      <h2 onClick={() => navigate(`/webinar/${webinarData._id}`)} className="text-2xl font-bold sm:text-3xl cursor-pointer">
+                        {webinarData.title}
+                      </h2>
+                      <p className="mt-4 text-gray-600">{webinarData.description}</p>
+                      <a
+                        target="blank"
+                        href={webinarData.link}
+                        className="mt-8 inline-block rounded border border-indigo-600 bg-indigo-600 px-12 py-3 text-sm font-medium text-white hover:text-indigo-600 focus:outline-none focus:ring active:text-indigo-500"
+                      >
+                        Daftar
+                      </a>
+                    </>
+                  ) : (
+                    <p>Loading...</p>
+                  )}
                 </div>
               </div>
             </div>
           </div>
         </section>
+
         {/* End Webinar Highlight */}
         {/* Tentang Kami */}
         <section id="tentang">
@@ -88,7 +113,7 @@ function Landing_page() {
                     {" "}
                     <img src={imgIrzia} className="rounded-circle mb-3" />
                     <h4 className="font-bold">R. Irzia Fitri Muthmainah</h4>
-                    <p>Full-stack Developer</p>
+                    <p>Front-end Developer</p>
                     <p>
                       <a href="https://www.instagram.com/irziaftrr/" className="social">
                         <i className="fab fa-instagram" />
