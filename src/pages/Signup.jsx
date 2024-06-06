@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 function Signup() {
   const signup = async (userData) => {
     try {
-      const response = await axios.post("http://119.81.65.99:3000/signup", userData);
+      const response = await axios.post("https://backend-grup42.my.id/signup", userData);
       return response.data;
     } catch (error) {
       // Tangani kesalahan jika ada

@@ -25,7 +25,7 @@ function AdminEdit() {
 
   const fetchWebinar = async () => {
     try {
-      const response = await axios.get(`http://119.81.65.99:3000/webinar/${id}`, {
+      const response = await axios.get(`https://backend-grup42.my.id/webinar/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

@@ -9,7 +9,7 @@ export const fetchWebinars =
   async (dispatch) => {
     dispatch({ type: FETCH_WEBINARS_REQUEST });
     try {
-      const response = await axios.get("http://119.81.65.99:3000/webinar/page", {
+      const response = await axios.get("https://backend-grup42.my.id/webinar/page", {
         params: { page, limit, category },
       });
       dispatch({

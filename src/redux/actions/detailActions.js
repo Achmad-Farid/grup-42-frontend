@@ -18,7 +18,7 @@ export function addComment(id, comment, token) {
     dispatch(fetching());
     try {
       await axios.post(
-        `http://119.81.65.99:3000/${id}/comments`,
+        `https://backend-grup42.my.id/${id}/comments`,
         { comment },
         {
           headers: {
@@ -51,7 +51,7 @@ export function addRating(id, rating, token) {
     dispatch(fetching());
     try {
       await axios.post(
-        `http://119.81.65.99:3000/${id}/ratings`,
+        `https://backend-grup42.my.id/${id}/ratings`,
         { rating },
         {
           headers: {
