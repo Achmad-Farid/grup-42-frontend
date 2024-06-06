@@ -77,7 +77,7 @@ function AdminEdit() {
     }
 
     try {
-      const response = await axios.patch(`119.81.65.99:3000/webinar/edit/${id}`, updatedData, {
+      const response = await axios.patch(`https://backend-grup42.my.id/webinar/edit/${id}`, updatedData, {
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "multipart/form-data",
