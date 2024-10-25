@@ -1,28 +1,28 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-// Membuat fungsi utilitas untuk mengambil token dari local storage
-const getToken = () => {
-  return localStorage.getItem("token");
-};
+// Fungsi utilitas untuk mengambil token dari local storage
+const getToken = () => localStorage.getItem("token");
 
 // Async thunk untuk menambah webinar
 export const addWebinar = createAsyncThunk("webinars/addWebinar", async (formData, { rejectWithValue }) => {
   try {
     const token = getToken(); // Mengambil token dari local storage
     if (!token) {
-      throw new Error("Token not found in local storage");
+      throw new Error("Token tidak ditemukan di local storage");
     }
 
+    // Mengirim data dalam format JSON
     const response = await axios.post("https://digiumkm-backend.vercel.app/webinar/add", formData, {
       headers: {
-        "Content-Type": "multipart/form-data",
+        "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
     });
+    console.log(response.data);
     return response.data;
   } catch (err) {
-    return rejectWithValue(err.response.data);
+    return rejectWithValue(err.response ? err.response.data : err.message);
   }
 });
 
@@ -33,7 +33,6 @@ const webinarSlice = createSlice({
     loading: false,
     error: null,
   },
-  reducers: {},
   extraReducers: (builder) => {
     builder
       .addCase(addWebinar.pending, (state) => {
