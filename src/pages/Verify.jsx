@@ -10,7 +10,7 @@ function Verify() {
   useEffect(() => {
     const verifyToken = async () => {
       try {
-        const response = await axios.get(`https://backend-grup42.my.id/verify/${token}`);
+        const response = await axios.get(`https://digiumkm-backend.vercel.app/verify/${token}`);
         setVerificationMessage(response.data.message);
         // Redirect to login page if verification is successful
         if (response.status === 200) {

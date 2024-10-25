@@ -139,9 +139,6 @@ function DetailWebinar() {
                           <div className="flex-1 border rounded-lg px-4 py-2 sm:px-6 sm:py-4 leading-relaxed">
                             <strong>{comment ? comment.name : ""}</strong> <span className="text-xs text-gray-400">{comment ? new Date(comment.createdAt).toLocaleString() : ""}</span>
                             <p className="text-sm">{comment ? comment.comment : ""}</p>
-                            <div className="mt-4 flex items-center">
-                              <div className="text-sm text-gray-500 font-semibold">{comment ? comment.sentiment : ""}</div>
-                            </div>
                           </div>
                         </div>
                       ))}

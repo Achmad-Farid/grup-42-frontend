@@ -25,7 +25,7 @@ function AdminEdit() {
 
   const fetchWebinar = async () => {
     try {
-      const response = await axios.get(`https://backend-grup42.my.id/webinar/${id}`, {
+      const response = await axios.get(`https://digiumkm-backend.vercel.app/webinar/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -77,7 +77,7 @@ function AdminEdit() {
     }
 
     try {
-      const response = await axios.patch(`https://backend-grup42.my.id/webinar/edit/${id}`, updatedData, {
+      const response = await axios.patch(`https://digiumkm-backend.vercel.app/webinar/edit/${id}`, updatedData, {
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "multipart/form-data",

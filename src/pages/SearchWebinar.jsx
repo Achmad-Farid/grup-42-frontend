@@ -22,7 +22,7 @@ const SearchWebinar = () => {
     e.preventDefault();
     setLoading(true);
     try {
-      const response = await axios.get("https://backend-grup42.my.id/webinar/search", { params: searchCriteria });
+      const response = await axios.get("https://digiumkm-backend.vercel.app/webinar/search", { params: searchCriteria });
       setSearchResults(Array.isArray(response.data) ? response.data : []);
     } catch (error) {
       console.error("Error searching for webinars:", error);

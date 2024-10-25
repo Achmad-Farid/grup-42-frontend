@@ -18,7 +18,7 @@ export function addComment(id, comment, token) {
     dispatch(fetching());
     try {
       await axios.post(
-        `https://backend-grup42.my.id/${id}/comments`,
+        `https://digiumkm-backend.vercel.app/${id}/comments`,
         { comment },
         {
           headers: {
@@ -38,7 +38,7 @@ export function getWebinarById(id) {
   return async function (dispatch) {
     dispatch(fetching());
     try {
-      const { data } = await axios(`https://backend-grup42.my.id/webinar/${id}`);
+      const { data } = await axios(`https://digiumkm-backend.vercel.app/webinar/${id}`);
       dispatch(success(data));
     } catch (error) {
       console.error("Failed to fetch webinar by ID:", error);
@@ -51,7 +51,7 @@ export function addRating(id, rating, token) {
     dispatch(fetching());
     try {
       await axios.post(
-        `https://backend-grup42.my.id/${id}/ratings`,
+        `https://digiumkm-backend.vercel.app/${id}/ratings`,
         { rating },
         {
           headers: {

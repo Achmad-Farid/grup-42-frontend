@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 function Signup() {
   const signup = async (userData) => {
     try {
-      const response = await axios.post("https://backend-grup42.my.id/signup", userData);
+      const response = await axios.post("https://digiumkm-backend.vercel.app/signup", userData);
       return response.data;
     } catch (error) {
       // Tangani kesalahan jika ada

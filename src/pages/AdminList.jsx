@@ -14,7 +14,7 @@ function AdminList() {
 
   const fetchWebinars = async () => {
     try {
-      const response = await axios.get("https://backend-grup42.my.id/webinar", {
+      const response = await axios.get("https://digiumkm-backend.vercel.app/webinar", {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -27,7 +27,7 @@ function AdminList() {
 
   const deleteWebinar = async (id) => {
     try {
-      const response = await axios.delete(`https://backend-grup42.my.id/webinar/delete/${id}`, {
+      const response = await axios.delete(`https://digiumkm-backend.vercel.app/webinar/delete/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

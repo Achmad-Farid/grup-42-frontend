@@ -14,7 +14,7 @@ export const addWebinar = createAsyncThunk("webinars/addWebinar", async (formDat
       throw new Error("Token not found in local storage");
     }
 
-    const response = await axios.post("https://backend-grup42.my.id/webinar/add", formData, {
+    const response = await axios.post("https://digiumkm-backend.vercel.app/webinar/add", formData, {
       headers: {
         "Content-Type": "multipart/form-data",
         Authorization: `Bearer ${token}`,

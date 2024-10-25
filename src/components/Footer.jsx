@@ -12,7 +12,7 @@ function Footer() {
               <img className="h-14" src={logo} alt="" />
             </a>
           </div>
-          <p className="mx-auto mt-6 max-w-md text-center leading-relaxed text-gray-500">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Incidunt consequuntur amet culpa cum itaque neque.</p>
+          <p className="mx-auto mt-6 max-w-md text-center leading-relaxed text-gray-500">digi umkm membantu para umkm</p>
           <ul className="mt-12 flex flex-wrap justify-center gap-6 md:gap-8 lg:gap-12">
             <li>
               <a className="text-gray-700 transition hover:text-gray-700/75" href="#">

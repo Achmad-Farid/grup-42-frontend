@@ -17,7 +17,7 @@ function Landing_page() {
     // Fungsi untuk mengambil data dari API
     const fetchData = async () => {
       try {
-        const response = await axios.get("https://backend-grup42.my.id/webinar");
+        const response = await axios.get("https://digiumkm-backend.vercel.app/webinar");
         setWebinarData(response.data[0]);
       } catch (error) {
         console.error("Error fetching webinar data:", error);
@@ -41,7 +41,7 @@ function Landing_page() {
                 Webinar Keren Lagi
                 <strong className="block font-extrabold text-purple-600"> Jangan Sampai Ketinggalan!</strong>
               </h1>
-              <p className="mt-4 max-w-lg sm:text-xl/relaxed">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nesciunt illo tenetur fuga ducimus numquam ea!</p>
+              <p className="mt-4 max-w-lg sm:text-xl/relaxed">Cari webinar terbaru disini, tingkatkan skillmu sebagai UMKM</p>
               <div className="mt-8 flex flex-wrap gap-4 text-center">
                 <a onClick={() => navigate("/search")} className="block w-full rounded bg-purple-600 px-12 py-3 text-sm font-medium text-white shadow hover:bg-purple-700 focus:outline-none focus:ring active:bg-purle-500 sm:w-auto">
                   Cari Webinar
@@ -90,7 +90,7 @@ function Landing_page() {
           <div className="container-fluid pt-4 pb-4 bg-light">
             <div className="text-center py-16">
               <h2 className="display-6 font-bold">Tim Kami</h2>
-              <p> Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nesciunt illo tenetur fuga ducimusnumquam ea!</p>
+              <p>Tim kami terdiri dari individu-individu berbakat yang bekerja sama untuk mencapai visi bersama."</p>
               <div className="row justify-content-center pt-4 gx-4 gy-4">
                 <div className="col-md-4 text-center tim">
                   <div className="d-flex justify-content-center align-items-center flex-column">

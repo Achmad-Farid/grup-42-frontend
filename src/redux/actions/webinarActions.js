@@ -9,7 +9,7 @@ export const fetchWebinars =
   async (dispatch) => {
     dispatch({ type: FETCH_WEBINARS_REQUEST });
     try {
-      const response = await axios.get("https://backend-grup42.my.id/webinar/page", {
+      const response = await axios.get("https://digiumkm-backend.vercel.app/webinar/page", {
         params: { page, limit, category },
       });
       dispatch({
