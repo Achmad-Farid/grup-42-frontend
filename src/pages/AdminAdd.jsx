@@ -13,34 +13,24 @@ function AdminAdd() {
     title: "",
     description: "",
     link: "",
-    image: null,
+    image: "", // Menyimpan URL gambar sebagai string
     startTime: "",
     endTime: "",
     categories: "",
   });
 
   const handleChange = (e) => {
-    const { name, value, files } = e.target;
-    if (files) {
-      // Jika input adalah file, gunakan files[0]
-      setFormData((prevFormData) => ({
-        ...prevFormData,
-        [name]: files[0],
-      }));
-    } else {
-      // Jika input bukan file, atur nilai biasa
-      setFormData((prevFormData) => ({
-        ...prevFormData,
-        [name]: name === "categories" ? value.split(",").map((category) => category.trim()) : value, // Mengubah kategori menjadi array jika nama input adalah 'categories'
-      }));
-    }
+    const { name, value } = e.target;
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      [name]: name === "categories" ? value.split(",").map((category) => category.trim()) : value,
+    }));
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     const { title, description, image, startTime, endTime, categories } = formData;
     if (!title || !description || !image || !startTime || !endTime || categories.length === 0) {
-      // Jika ada bidang yang kosong, tampilkan pesan kesalahan
       setErrorMessage("Harap lengkapi semua bidang.");
       return;
     }
@@ -48,13 +38,12 @@ function AdminAdd() {
     dispatch(addWebinar(formData))
       .unwrap()
       .then((data) => {
-        // Penambahan webinar berhasil
         console.log("Webinar berhasil ditambahkan:", data);
-        // Reset form jika diperlukan
         setFormData({
           title: "",
           description: "",
-          image: null,
+          link: "",
+          image: "", // Reset URL gambar
           startTime: "",
           endTime: "",
           categories: [],
@@ -62,7 +51,6 @@ function AdminAdd() {
         setErrorMessage("");
       })
       .catch((err) => {
-        // Penambahan webinar gagal
         console.error("Gagal menambahkan webinar:", err);
         setErrorMessage(err.message || "Terjadi kesalahan saat menambahkan webinar");
       });
@@ -86,7 +74,6 @@ function AdminAdd() {
             </div>
           </div>
         </header>
-        {/* main */}
         <main>
           <div className="page-header">
             <h1>Tambah Webinar</h1>
@@ -94,9 +81,8 @@ function AdminAdd() {
           </div>
           <div className="page-content">
             <div className="analytics">
-              {/* add webinar */}
               <div className="form-container">
-                <form onSubmit={handleSubmit} encType="multipart/form-data">
+                <form onSubmit={handleSubmit}>
                   <div className="form-group">
                     <label htmlFor="title" style={{ fontFamily: '"Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif', color: "gray" }}>
                       Judul Webinar:
@@ -117,9 +103,9 @@ function AdminAdd() {
                   </div>
                   <div className="form-group">
                     <label htmlFor="image" style={{ fontFamily: '"Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif', color: "gray" }}>
-                      Gambar:
+                      URL Gambar:
                     </label>
-                    <input type="file" id="image" name="image" className="form-control-file" required onChange={handleChange} />
+                    <input type="text" id="image" name="image" className="form-control" required onChange={handleChange} />
                   </div>
                   <div className="form-group">
                     <label htmlFor="startTime" style={{ fontFamily: '"Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif', color: "gray" }}>
@@ -144,7 +130,6 @@ function AdminAdd() {
                   </button>
                   {error && <p className="error">{error}</p>}
                 </form>
-                {/* Pesan kesalahan */}
                 {errorMessage && <p>{errorMessage}</p>}
               </div>
             </div>
