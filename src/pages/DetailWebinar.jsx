@@ -3,6 +3,29 @@ import { useParams } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import { useDispatch, useSelector } from "react-redux";
 import { addComment, addRating, getWebinarById } from "../redux/actions/detailActions";
+import { PDFDownloadLink } from "@react-pdf/renderer"; // Import PDFDownloadLink for PDF generation
+import { Document, Page, Text, View, StyleSheet } from "@react-pdf/renderer"; // Import necessary components for PDF
+import { jwtDecode } from "jwt-decode";
+
+// Styles for PDF
+const styles = StyleSheet.create({
+  page: {
+    padding: 20,
+  },
+  title: {
+    fontSize: 24,
+    textAlign: "center",
+    fontWeight: "bold",
+  },
+  section: {
+    margin: 10,
+    padding: 10,
+  },
+  text: {
+    margin: 5,
+    fontSize: 12,
+  },
+});
 
 function DetailWebinar() {
   const { id } = useParams();
@@ -12,21 +35,24 @@ function DetailWebinar() {
   const [rating, setRating] = useState(0);
   const [hover, setHover] = useState(0);
   const [ratingError, setRatingError] = useState("");
-  // Tambahkan state untuk menyimpan rating rata-rata
   const [averageRating, setAverageRating] = useState(0);
+
+  // State for the registration popup
+  const [popupVisible, setPopupVisible] = useState(false);
+  const [registrationDetails, setRegistrationDetails] = useState(null);
 
   const token = localStorage.getItem("token");
 
   useEffect(() => {
     dispatch(getWebinarById(id));
   }, [id]);
+
   useEffect(() => {
     if (data && data.ratings && data.ratings.length > 0) {
       const totalRating = data.ratings.reduce((acc, cur) => acc + cur.rating, 0);
       const avgRating = totalRating / data.ratings.length;
-      setAverageRating(avgRating.toFixed(1)); // Set nilai rating rata-rata dengan 1 desimal
+      setAverageRating(avgRating.toFixed(1));
     } else {
-      // Jika tidak ada rating, set rata-rata rating menjadi 0
       setAverageRating(0);
     }
   }, [data]);
@@ -52,6 +78,31 @@ function DetailWebinar() {
       setRatingError("Rating must be a number between 1 and 5");
     }
   };
+
+  let name;
+  if (token) {
+    name = jwtDecode(token);
+  }
+
+  const handleRegister = () => {
+    // Set the registration details
+    const currentDate = new Date().toLocaleString();
+    const details = {
+      accountName: token ? name.name : "Guest",
+      registrationDate: currentDate,
+      webinarTitle: data.title,
+      description: data.description,
+      startTime: new Date(data.startTime).toLocaleString(),
+      endTime: new Date(data.endTime).toLocaleString(),
+      categories: data.categories.join(", "),
+      link: data.link,
+    };
+
+    setRegistrationDetails(details);
+    setPopupVisible(true);
+  };
+
+  console.log(registrationDetails);
 
   return (
     <>
@@ -84,11 +135,52 @@ function DetailWebinar() {
             </dl>
             <div className="flex justify-end mt-4">
               {data && data.link && (
-                <a href={data.link} target="_blank" className="px-4 py-2 rounded-md bg-purple-500 text-white hover:bg-purple-700">
+                <button onClick={handleRegister} className="px-4 py-2 rounded-md bg-purple-500 text-white hover:bg-purple-700">
                   Daftar
-                </a>
+                </button>
               )}
             </div>
+
+            {/* Popup for Registration Confirmation */}
+            {popupVisible && (
+              <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+                <div className="bg-white p-6 rounded-lg shadow-lg">
+                  <h2 className="text-lg font-semibold text-center">PENDAFTARAN BERHASIL</h2>
+                  <p>Atas nama akun: {registrationDetails.accountName}</p>
+                  <p>Hari/tanggal: {registrationDetails.registrationDate}</p>
+                  <p className="font-bold text-center">{registrationDetails.webinarTitle}</p>
+                  <p className="mt-2">{registrationDetails.description}</p>
+                  <p>Waktu Mulai: {registrationDetails.startTime}</p>
+                  <p>Waktu Selesai: {registrationDetails.endTime}</p>
+                  <p>Kategori: {registrationDetails.categories}</p>
+                  <p>Silahkan Daftar Ulang di Link Berikut: {registrationDetails.link}</p>
+                  <PDFDownloadLink
+                    document={
+                      <Document>
+                        <Page size="A4" style={styles.page}>
+                          <Text style={styles.title}>{registrationDetails.webinarTitle}</Text>
+                          <Text style={styles.text}>Atas nama akun: {registrationDetails.accountName}</Text>
+                          <Text style={styles.text}>Hari/tanggal: {registrationDetails.registrationDate}</Text>
+                          <Text style={styles.text}>{registrationDetails.description}</Text>
+                          <Text style={styles.text}>Waktu Mulai: {registrationDetails.startTime}</Text>
+                          <Text style={styles.text}>Waktu Selesai: {registrationDetails.endTime}</Text>
+                          <Text style={styles.text}>Kategori: {registrationDetails.categories}</Text>
+                          <Text style={styles.text}>Silahkan Daftar Ulang di Link Berikut: {registrationDetails.link}</Text>
+                        </Page>
+                      </Document>
+                    }
+                    fileName="registration_details.pdf"
+                    className="mt-4 bg-blue-500 text-white rounded-md px-4 py-2"
+                  >
+                    {({ loading }) => (loading ? "Loading document..." : "Cetak")}
+                  </PDFDownloadLink>
+                  <button className="mt-4 bg-red-500 text-white rounded-md px-4 py-2" onClick={() => setPopupVisible(false)}>
+                    Tutup
+                  </button>
+                </div>
+              </div>
+            )}
+
             <div className="mt-6">
               <h2 className="text-lg font-semibold mb-4">Rating Rata-rata</h2>
               <p>{averageRating}</p>
@@ -101,48 +193,38 @@ function DetailWebinar() {
                   index += 1;
                   return (
                     <button type="button" key={index} className={index <= (hover || rating) ? "text-yellow-500" : "text-gray-300"} onClick={() => setRating(index)} onMouseEnter={() => setHover(index)} onMouseLeave={() => setHover(rating)}>
-                      <span className="star text-2xl">&#9733;</span>
+                      ★
                     </button>
                   );
                 })}
-                <button type="submit" className="ml-4 px-4 py-2 bg-blue-500 text-white rounded-md">
-                  Submit
-                </button>
-              </form>
-              {ratingError && <p className="text-red-500 mt-2">{ratingError}</p>}
-            </div>
-            {/* Komentar */}
-            <div className="mt-6">
-              <h2 className="text-lg font-semibold mb-4">Komentar</h2>
-              <h2 className={!token ? "text-center" : "hidden"}>Login untuk memberi komentar</h2>
-              <form onSubmit={handleCommentSubmit} className={token ? "mb-4" : "hidden"}>
-                <textarea className="w-full p-2 border border-gray-300 rounded-md" value={newComment} onChange={handleCommentChange} placeholder="Tulis komentar Anda" rows="3"></textarea>
-                <button type="submit" className="mt-2 px-4 py-2 bg-blue-500 text-white rounded-md">
+                <span className="ml-2 text-red-500">{ratingError}</span>
+                <button type="submit" className="ml-4 px-4 py-2 rounded-md bg-blue-500 text-white">
                   Kirim
                 </button>
               </form>
-              <ul className="space-y-4">
-                {!data
-                  ? ""
-                  : data.comments
-                      .slice()
-                      .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
-                      .map((comment, index) => (
-                        <div key={comment ? comment._id : index} className="flex">
-                          <div className="flex-shrink-0 mr-3">
-                            <img
-                              className="mt-2 rounded-full w-8 h-8 sm:w-10 sm:h-10"
-                              src="https://images.unsplash.com/photo-1604426633861-11b2faead63c?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=200&h=200&q=80"
-                              alt=""
-                            />
-                          </div>
-                          <div className="flex-1 border rounded-lg px-4 py-2 sm:px-6 sm:py-4 leading-relaxed">
-                            <strong>{comment ? comment.name : ""}</strong> <span className="text-xs text-gray-400">{comment ? new Date(comment.createdAt).toLocaleString() : ""}</span>
-                            <p className="text-sm">{comment ? comment.comment : ""}</p>
-                          </div>
-                        </div>
-                      ))}
-              </ul>
+            </div>
+
+            {/* Comments Section */}
+            <div className="mt-6">
+              <h2 className="text-lg font-semibold mb-4">Komentar</h2>
+              <form onSubmit={handleCommentSubmit} className="flex">
+                <input type="text" value={newComment} onChange={handleCommentChange} className="border p-2 flex-grow" placeholder="Tulis komentar..." />
+                <button type="submit" className="ml-2 px-4 py-2 rounded-md bg-blue-500 text-white">
+                  Kirim
+                </button>
+              </form>
+            </div>
+            <div className="mt-4">
+              {data &&
+                data.comments &&
+                data.comments.map((comment) => (
+                  <div key={comment._id} className="border-b p-2">
+                    <p>
+                      <strong>{comment.name}:</strong> {comment.comment}
+                    </p>
+                    <p className="text-gray-500 text-xs">{new Date(comment.createdAt).toLocaleString()}</p>
+                  </div>
+                ))}
             </div>
           </div>
         </div>
@@ -150,4 +232,5 @@ function DetailWebinar() {
     </>
   );
 }
+
 export default DetailWebinar;
