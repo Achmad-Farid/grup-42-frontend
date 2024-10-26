@@ -54,7 +54,7 @@ function Landing_page() {
         {/* Webinar Highlight */}
         <section>
           <div className="mx-auto max-w-screen-2xl px-4 py-16 sm:px-6 lg:px-8">
-            <div className="grid grid-cols-1 lg:h-screen lg:grid-cols-2">
+            <div onClick={() => navigate(`/webinar/${webinarData._id}`)} className="grid grid-cols-1 lg:h-screen lg:grid-cols-2">
               <div className="relative z-10 lg:py-16">
                 <div className="relative h-64 sm:h-80 lg:h-full">{webinarData && webinarData.image && <img alt="" src={webinarData.image} className="absolute inset-0 h-full w-full object-cover" />}</div>
               </div>
@@ -67,13 +67,7 @@ function Landing_page() {
                         {webinarData.title}
                       </h2>
                       <p className="mt-4 text-gray-600">{webinarData.description}</p>
-                      <a
-                        target="blank"
-                        href={webinarData.link}
-                        className="mt-8 inline-block rounded border border-indigo-600 bg-indigo-600 px-12 py-3 text-sm font-medium text-white hover:text-indigo-600 focus:outline-none focus:ring active:text-indigo-500"
-                      >
-                        Daftar
-                      </a>
+                      <a className="mt-8 inline-block rounded border border-indigo-600 bg-indigo-600 px-12 py-3 text-sm font-medium text-white hover:text-indigo-600 focus:outline-none focus:ring active:text-indigo-500">Daftar</a>
                     </>
                   ) : (
                     <p>Loading...</p>
